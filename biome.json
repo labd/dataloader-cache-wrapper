@@ -5,6 +5,9 @@
 		"clientKind": "git",
 		"defaultBranch": "main"
 	},
+	"files": {
+		"includes": ["**", "!coverage/*"]
+	},
 	"json": {
 		"parser": {
 			"allowComments": true
@@ -17,7 +20,7 @@
 	"linter": {
 		"enabled": true,
 		"rules": {
-			"recommended": true,
+			"preset": "recommended",
 			"complexity": {
 				"noUselessTernary": "error",
 				"useDateNow": "error",
@@ -29,7 +32,6 @@
 				"noUnusedVariables": "off"
 			},
 			"suspicious": {
-				"noConsoleLog": "error",
 				"noEvolvingTypes": "error",
 				"useErrorMessage": "error"
 			},
@@ -37,6 +39,7 @@
 				"noParameterAssign": "off",
 				"noUselessElse": "off",
 				"useConsistentBuiltinInstantiation": "error",
+				"noNestedTernary": "warn",
 				"useFilenamingConvention": {
 					"level": "error",
 					"options": {
@@ -46,9 +49,6 @@
 				},
 				"useTemplate": "off",
 				"useThrowOnlyError": "error"
-			},
-			"nursery": {
-				"noNestedTernary": "warn"
 			}
 		}
 	}

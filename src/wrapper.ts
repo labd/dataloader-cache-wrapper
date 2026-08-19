@@ -1,7 +1,7 @@
 import DataLoader, { type BatchLoadFn } from "dataloader";
 import type Keyv from "keyv";
-import { dataloaderCache } from "./cache";
 import type { NotUndefined } from "./cache";
+import { dataloaderCache } from "./cache";
 
 type Options<K, V, C = K> = {
 	cache?: {

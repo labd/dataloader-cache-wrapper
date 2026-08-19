@@ -42,20 +42,20 @@
 		"tsc": "tsc --noEmit"
 	},
 	"devDependencies": {
-		"@changesets/cli": "2.29.1",
+		"@changesets/cli": "3.0.0",
 		"@types/object-hash": "3.0.6",
-		"@vitest/coverage-v8": "3.1.1",
+		"@vitest/coverage-v8": "4.1.10",
 		"dataloader": "^2.2.3",
-		"tsup": "8.4.0",
-		"typescript": "5.8.3",
-		"vitest": "3.1.1"
+		"tsup": "8.5.1",
+		"typescript": "7.0.2",
+		"vitest": "4.1.10"
 	},
 	"peerDependencies": {
 		"dataloader": ">=2.0 <3.0",
 		"keyv": ">=4.0.0 <6.0.0"
 	},
 	"dependencies": {
-		"@biomejs/biome": "1.9.4",
+		"@biomejs/biome": "2.5.8",
 		"object-hash": "3.0.0"
 	},
 	"packageManager": "pnpm@10.8.0"
