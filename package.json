@@ -52,7 +52,7 @@
 	},
 	"peerDependencies": {
 		"dataloader": ">=2.0 <3.0",
-		"keyv": ">=4.0.0 <6.0.0"
+		"keyv": ">=5.3.4 <6.0.0"
 	},
 	"dependencies": {
 		"@biomejs/biome": "2.5.8",

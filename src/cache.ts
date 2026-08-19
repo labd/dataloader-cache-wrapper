@@ -85,17 +85,21 @@ const fromCache = async <K, V>(
 	return cachedValues.map((v) => v);
 };
 
-// Write items to the cache
+// Write items to the cache. setMany hands the store the whole batch in one call,
+// so the store decides how to write it -- the redis adapter wraps it in a single
+// MULTI -- and a failure is reported once instead of per key. Instrumentation
+// that traces store commands sees one batch rather than one command per key.
 const toCache = async <K, V>(
 	items: Map<string, V | null>,
 	options: cacheOptions<K, V | null>,
 ): Promise<void> => {
-	if (!options.store) {
+	if (!options.store || items.size === 0) {
 		return;
 	}
-	for (const [key, value] of items) {
-		options.store.set(key, value, options.ttl);
-	}
+
+	await options.store.setMany(
+		Array.from(items, ([key, value]) => ({ key, value, ttl: options.ttl })),
+	);
 };
 
 function zip<T, U>(arr1: readonly T[], arr2: readonly U[]): [T, U][] {
