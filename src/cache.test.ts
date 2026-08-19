@@ -1,6 +1,6 @@
 import DataLoader from "dataloader";
 import Keyv from "keyv";
-import { assert, describe, expect, it } from "vitest";
+import { assert, describe, expect, it, vi } from "vitest";
 import { dataloaderCache } from "./cache";
 
 type MyKey = {
@@ -221,5 +221,68 @@ describe("Test keyv store", () => {
 			const storedUndefined = await store.get("item-data:5:id:null-1");
 			expect(storedUndefined).toBeUndefined();
 		}
+	});
+});
+
+describe("Test batched writes", () => {
+	const fetchItemsBySlugUncached = async (
+		keys: readonly MyKey[],
+	): Promise<(MyValue | null)[]> =>
+		keys.map((key) => ({
+			slug: key.slug,
+			name: key.slug,
+		}));
+
+	it("Write a batch of misses in one store call", async () => {
+		const store = new Keyv();
+		const setMany = vi.spyOn(store, "setMany");
+
+		const loader = new DataLoader<MyKey, MyValue | null>(
+			async (keys) =>
+				dataloaderCache({
+					batchLoadFn: fetchItemsBySlugUncached,
+					keys: keys,
+					store: store,
+					ttl: 3600,
+
+					cacheKeysFn: (ref: MyKey) => [`item-data:${ref.id}:id:${ref.slug}`],
+				}),
+			{ maxBatchSize: 50 },
+		);
+
+		await loader.loadMany([
+			{ id: "1", slug: "test-1" },
+			{ id: "2", slug: "test-2" },
+			{ id: "3", slug: "test-3" },
+		]);
+
+		expect(setMany).toHaveBeenCalledTimes(1);
+		expect(setMany.mock.calls[0][0]).toEqual([
+			{ key: "item-data:1:id:test-1", value: expect.anything(), ttl: 3600 },
+			{ key: "item-data:2:id:test-2", value: expect.anything(), ttl: 3600 },
+			{ key: "item-data:3:id:test-3", value: expect.anything(), ttl: 3600 },
+		]);
+	});
+
+	it("Skip the store when there is nothing to write", async () => {
+		const store = new Keyv();
+		const setMany = vi.spyOn(store, "setMany");
+
+		const loader = new DataLoader<MyKey, MyValue | null>(
+			async (keys) =>
+				dataloaderCache({
+					batchLoadFn: async () => [new Error("boom")],
+					keys: keys,
+					store: store,
+					ttl: 3600,
+
+					cacheKeysFn: (ref: MyKey) => [`item-data:${ref.id}:id:${ref.slug}`],
+				}),
+			{ maxBatchSize: 50 },
+		);
+
+		await loader.load({ id: "1", slug: "test-1" });
+
+		expect(setMany).not.toHaveBeenCalled();
 	});
 });
