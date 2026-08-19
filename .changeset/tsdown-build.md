@@ -1,0 +1,20 @@
+---
+"@labdigital/dataloader-cache-wrapper": patch
+---
+
+Build with tsdown instead of tsup, and validate the published package with
+publint on every build.
+
+The published output changes shape slightly as a result:
+
+- The unused `iife` bundle is gone; only `esm` and `cjs` are emitted.
+- `exports["."]` now declares `types` per condition, with `./dist/index.d.cts`
+  for `require`. The single `index.d.ts` was interpreted as ESM under the
+  `require` condition, so the types only resolved for CJS consumers that used a
+  dynamic `import()`.
+- `files` is set to `dist`, so the tarball no longer ships `src`, tests and
+  build config. `sideEffects: false` is declared so bundlers can tree-shake.
+- `@biomejs/biome` moves from `dependencies` to `devDependencies`; it is a
+  build-time tool and was being installed by every consumer.
+- `engines.node` is declared as `>=20`, matching the versions CI already tests
+  on (20.x and 22.x).

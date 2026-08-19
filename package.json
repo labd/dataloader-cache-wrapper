@@ -4,7 +4,7 @@
 	"author": "Lab Digital <opensource@labdigital.nl>",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/labd/dataloader-cache-wrapper"
+		"url": "git+https://github.com/labd/dataloader-cache-wrapper.git"
 	},
 	"license": "MIT",
 	"publishConfig": {
@@ -18,10 +18,22 @@
 	"type": "module",
 	"exports": {
 		".": {
-			"types": "./dist/index.d.ts",
-			"require": "./dist/index.cjs",
-			"import": "./dist/index.js"
+			"import": {
+				"types": "./dist/index.d.ts",
+				"default": "./dist/index.js"
+			},
+			"require": {
+				"types": "./dist/index.d.cts",
+				"default": "./dist/index.cjs"
+			}
 		}
+	},
+	"files": [
+		"dist"
+	],
+	"sideEffects": false,
+	"engines": {
+		"node": ">=20"
 	},
 	"prettier": {
 		"printWidth": 80,
@@ -30,9 +42,9 @@
 		"trailingComma": "es5"
 	},
 	"scripts": {
-		"build": "tsup",
+		"build": "tsdown",
 		"check": "pnpm lint && pnpm tsc",
-		"dev": "tsup --watch",
+		"dev": "tsdown --watch",
 		"publish:ci": "pnpm build && pnpm changeset publish",
 		"publish:version": "pnpm changeset version && pnpm format",
 		"test": "vitest run --coverage",
@@ -42,11 +54,13 @@
 		"tsc": "tsc --noEmit"
 	},
 	"devDependencies": {
+		"@biomejs/biome": "2.5.8",
 		"@changesets/cli": "3.0.0",
 		"@types/object-hash": "3.0.6",
 		"@vitest/coverage-v8": "4.1.10",
 		"dataloader": "^2.2.3",
-		"tsup": "8.5.1",
+		"publint": "0.3.22",
+		"tsdown": "^0.22.14",
 		"typescript": "7.0.2",
 		"vitest": "4.1.10"
 	},
@@ -55,7 +69,6 @@
 		"keyv": ">=5.3.4 <6.0.0"
 	},
 	"dependencies": {
-		"@biomejs/biome": "2.5.8",
 		"object-hash": "3.0.0"
 	},
 	"packageManager": "pnpm@10.8.0"
