@@ -16,5 +16,7 @@ The published output changes shape slightly as a result:
   build config. `sideEffects: false` is declared so bundlers can tree-shake.
 - `@biomejs/biome` moves from `dependencies` to `devDependencies`; it is a
   build-time tool and was being installed by every consumer.
-- `engines.node` is declared as `>=20`, matching the versions CI already tests
-  on (20.x and 22.x).
+- `engines.node` is declared as `>=22`. Node 20 is end-of-life, and tsdown
+  itself requires `^22.18.0 || >=24.11.0` -- on older versions it falls back to
+  the `unrun` config loader, which is an optional peer dependency and not
+  installed here. CI now validates on 22.x, 24.x and 26.x.
