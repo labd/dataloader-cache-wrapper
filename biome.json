@@ -6,7 +6,7 @@
 		"defaultBranch": "main"
 	},
 	"files": {
-		"includes": ["**", "!coverage/*"]
+		"includes": ["**", "!**/node_modules/*", "!**/dist/*", "!**/coverage/*"]
 	},
 	"json": {
 		"parser": {
