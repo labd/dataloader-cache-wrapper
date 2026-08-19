@@ -1,5 +1,46 @@
 # @labdigital/dataloader-cache-wrapper
 
+## 0.7.0
+
+### Minor Changes
+
+- cd67d6e: Write cache misses with a single `setMany` instead of a `set` per key.
+  
+  This is not a round-trip win: the individual writes were already pipelined by the
+  store's client, and the same commands and bytes go over the socket either way.
+  What changes is that the batch is one call into the store, so the store can write
+  it as a unit -- the redis adapter wraps it in a single MULTI -- and tracing shows
+  one batch instead of one command per key, which for a batch of 36 products was 36
+  spans of noise per request.
+  
+  The writes are also awaited now, so a failing store surfaces as an `error` event
+  on it rather than as a floating rejection.
+  
+  `setMany` requires keyv 5.3.4 or newer -- earlier versions hand unserialized
+  entries to the store adapter, which writes values `get` cannot read back. The
+  peer range moves from `>=4.0.0 <6.0.0` to `>=5.3.4 <6.0.0`.
+
+### Patch Changes
+
+- 049bdf1: Build with tsdown instead of tsup, and validate the published package with
+  publint on every build.
+  
+  The published output changes shape slightly as a result:
+  
+  - The unused `iife` bundle is gone; only `esm` and `cjs` are emitted.
+  - `exports["."]` now declares `types` per condition, with `./dist/index.d.cts`
+    for `require`. The single `index.d.ts` was interpreted as ESM under the
+    `require` condition, so the types only resolved for CJS consumers that used a
+    dynamic `import()`.
+  - `files` is set to `dist`, so the tarball no longer ships `src`, tests and
+    build config. `sideEffects: false` is declared so bundlers can tree-shake.
+  - `@biomejs/biome` moves from `dependencies` to `devDependencies`; it is a
+    build-time tool and was being installed by every consumer.
+  - `engines.node` is declared as `>=22`. Node 20 is end-of-life, and tsdown
+    itself requires `^22.18.0 || >=24.11.0` -- on older versions it falls back to
+    the `unrun` config loader, which is an optional peer dependency and not
+    installed here. CI now validates on 22.x, 24.x and 26.x.
+
 ## 0.6.2
 
 ### Patch Changes
