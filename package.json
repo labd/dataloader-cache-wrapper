@@ -48,16 +48,16 @@
 		"tsc": "tsc --noEmit"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "2.5.8",
-		"@changesets/cli": "3.0.0",
+		"@biomejs/biome": "2.5.15",
+		"@changesets/cli": "3.0.3",
 		"@types/object-hash": "3.0.6",
-		"@vitest/coverage-v8": "4.1.10",
+		"@vitest/coverage-v8": "5.0.5",
 		"dataloader": "^2.2.3",
 		"keyv": "^6.1.0",
-		"publint": "0.3.22",
-		"tsdown": "^0.22.14",
+		"publint": "0.3.25",
+		"tsdown": "^0.23.1",
 		"typescript": "7.0.2",
-		"vitest": "4.1.10"
+		"vitest": "5.0.5"
 	},
 	"peerDependencies": {
 		"dataloader": ">=2.0 <3.0",
