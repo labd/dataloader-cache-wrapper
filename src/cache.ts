@@ -1,5 +1,5 @@
 import type DataLoader from "dataloader";
-import type Keyv from "keyv";
+import type { Keyv } from "keyv";
 import hashObject from "object-hash";
 
 export type NotUndefined = object | string | number | boolean | NotUndefined[];

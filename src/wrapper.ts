@@ -1,5 +1,5 @@
 import DataLoader, { type BatchLoadFn } from "dataloader";
-import type Keyv from "keyv";
+import type { Keyv } from "keyv";
 import type { NotUndefined } from "./cache";
 import { dataloaderCache } from "./cache";
 

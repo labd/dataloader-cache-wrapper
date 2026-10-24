@@ -1,4 +1,4 @@
-import Keyv from "keyv";
+import { Keyv } from "keyv";
 import { assert, beforeEach, describe, expect, it } from "vitest";
 import { DataLoaderCache } from "./wrapper";
 

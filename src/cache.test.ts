@@ -1,5 +1,5 @@
 import DataLoader from "dataloader";
-import Keyv from "keyv";
+import { Keyv } from "keyv";
 import { assert, describe, expect, it, vi } from "vitest";
 import { dataloaderCache } from "./cache";
 
