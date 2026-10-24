@@ -1,5 +1,11 @@
 # @labdigital/dataloader-cache-wrapper
 
+## 0.8.0
+
+### Minor Changes
+
+- 3c82807: Support keyv v6 in addition to v5 (peer range is now `>=5.3.4 <7.0.0`)
+
 ## 0.7.0
 
 ### Minor Changes
