@@ -8,7 +8,8 @@
 	},
 	"license": "MIT",
 	"publishConfig": {
-		"access": "public"
+		"access": "public",
+		"provenance": true
 	},
 	"description": "Wrapper around dataloader to cache the results of the loader",
 	"keywords": [],
