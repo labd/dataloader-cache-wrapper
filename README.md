@@ -1,5 +1,7 @@
 # node-dataloader-cache-wrapper
 
+[![npm](https://img.shields.io/npm/v/@labdigital/dataloader-cache-wrapper)](https://www.npmjs.com/package/@labdigital/dataloader-cache-wrapper)
+[![CI](https://github.com/labd/dataloader-cache-wrapper/actions/workflows/release.yml/badge.svg)](https://github.com/labd/dataloader-cache-wrapper/actions/workflows/release.yml)
 
 ## Usage
 ```ts
