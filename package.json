@@ -46,6 +46,7 @@
 		"test:ci": "vitest run --coverage",
 		"format": "biome format --fix",
 		"lint": "biome check",
+		"lint:package": "publint --strict",
 		"tsc": "tsc --noEmit"
 	},
 	"devDependencies": {
